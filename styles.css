@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background:#f0f2f5;
+    font-family: 'Poppins', sans-serif;
+}
+
+header{
+    height:300px;
+    background-color: rgb(9, 72, 9);
+    display: flex;
+    justify-content: center;
+}
+
+header h1{
+    color:white;
+    font-weight: lighter;
+    margin-top:20px;
+}
+
+main{
+    width:60%;
+    margin: auto;
+    
+    position: relative;
+    top:-80px;
+}
+
+#balance h2{
+    color:white;
+    margin-bottom:15px;
+    font-weight:normal;
+}
+
+#transaction h2{
+
+}
+
+.card{
+    background-color:white;
+    margin-bottom: 15px;
+    border-radius:10px;
+    padding:30px;
+    
+     
+
+}
+
+.green-bg{
+    background-color:green;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+}
