@@ -4,6 +4,8 @@
     --green:#46aa26;
     --light-green:#3dd705;
     --red:#e92929;
+    --grey:#c7c7c7;
+    --blue:blue;
 }
 *{
     margin: 0;
@@ -35,6 +37,16 @@ body{
 .container {
     width:min(90vw,800px);
     margin:auto;
+}
+
+.grey-bg{
+    background-color:var(--grey)!important;
+}
+.red-bg{
+    background:var(--red)!important;
+}
+.blue-bg{
+    background:var(--blue)!important;
 }
 
 /* Titles =============================== */
@@ -232,6 +244,7 @@ td.expense {
 
     opacity: 0;
     visibility: hidden;
+    z-index:999;
     
 }
 

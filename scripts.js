@@ -50,7 +50,6 @@ const Transaction = {
     },
     remove(index){
         Transaction.all.splice(index,1);
-
         App.reload();
     },
     incomes(){
@@ -80,6 +79,10 @@ const Transaction = {
         return expense;
     },
     total(){
+        // let total = Transaction.incomes() + Transaction.expenses();
+        // console.log(total);
+        // return total;
+        
         return Transaction.incomes() + Transaction.expenses();
     }
 }
@@ -109,6 +112,7 @@ const DOM = {
         </td>
     
         `
+        
         return html;
     },
     updateBalance(){
@@ -121,6 +125,10 @@ const DOM = {
         document
             .getElementById('totalDisplay')
             .innerHTML = Utils.formatCurrency(Transaction.total());
+            
+        Utils.formatTotalCard();    
+        
+            
     },
     clearTransactions(){
         DOM.transactionsContainer.innerHTML = "";
@@ -131,9 +139,9 @@ const DOM = {
 
 const Utils = {
     formatAmount(value){
-        value = Number(value) * 100;
+        value = value * 100;
         
-        return value;
+        return Math.round(value);
     },
     formatDate(date){
         const splittedDate = date.split("-");
@@ -152,6 +160,25 @@ const Utils = {
         });
 
         return  signal + value;
+    },
+    formatTotalCard(){
+        // const totalCardContent = document.querySelector('.card.total #totalDisplay').innerText.includes('-');
+        const totalCardContent = document.querySelector('.card.total #totalDisplay').innerText;
+        const num = Number(totalCardContent.replace(/[^0-9\.-]+/g,""));
+        const totalCard = document.querySelector('.card.total');
+
+        if(num<0){
+            totalCard.classList.add('red-bg');
+            totalCard.classList.remove('blue-bg');
+        }else if(num>0){
+            totalCard.classList.add('blue-bg');
+            totalCard.classList.remove('red-bg');
+
+            
+        }else if(num === 0){
+            totalCard.classList.remove('blue-bg');
+            totalCard.classList.remove('red-bg');
+        }
     }
 }
 
@@ -224,9 +251,9 @@ const App = {
         Transaction.all.forEach((transaction, index)=>{
             DOM.addTransaction(transaction,index);
         });
-
         DOM.updateBalance();
-
+       
+        
         Storage.set(Transaction.all);
     },
     reload() {
@@ -238,6 +265,8 @@ const App = {
 
 
 App.init();
+
+
 
 // Transaction.add({
     
