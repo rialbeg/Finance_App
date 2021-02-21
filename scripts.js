@@ -50,6 +50,7 @@ const Transaction = {
     },
     remove(index){
         Transaction.all.splice(index,1);
+       
         App.reload();
     },
     incomes(){
@@ -87,12 +88,16 @@ const Transaction = {
     }
 }
 
+let count = 0;
 
 const DOM = {
     transactionsContainer:document.querySelector('#data-table tbody'),
     addTransaction(transaction,index){
-        
+        // count++;
         const tr = document.createElement('tr');
+       
+        tr.className = `animate__animated animate__fadeInLeft`;
+        // tr.className = `restored-item `;
         tr.innerHTML = DOM.innerHTMLTransaction(transaction,index);
         tr.dataset.index = index;
         DOM.transactionsContainer.appendChild(tr);
@@ -108,7 +113,7 @@ const DOM = {
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
-            <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
+            <img onclick="Transaction.remove(${index})" class="hvr-pulse" src="./assets/minus.svg" alt="Remover transação">
         </td>
     
         `
@@ -245,6 +250,28 @@ const Form = {
 }
 
 
+const Animations = {
+    FadeInLeft(){
+        const tr = document.querySelectorAll('tr');
+        for(let i=0; i<tr.length-1; i++){
+            tr[i].classList.remove('animate__fadeInLeft');
+        }
+        // console.log(tr.length); 
+    },
+    FadeOutLeft(index){
+        const tr = document.querySelectorAll('tr');
+        tr[index-1].classList.remove('animate__fadeInLeft');
+        tr[index-1].classList.add('animate__fadeOutLeft');
+
+    },
+    ResetFadeInLeft(){
+        const tr = document.querySelectorAll('tr');
+        for(let i=0; i<tr.length; i++){
+            tr[i].classList.remove('animate__fadeInLeft');
+        }
+    }
+}
+
 
 const App = {
     init() {
@@ -252,7 +279,9 @@ const App = {
             DOM.addTransaction(transaction,index);
         });
         DOM.updateBalance();
-       
+        
+
+       Animations.FadeInLeft();
         
         Storage.set(Transaction.all);
     },
@@ -266,6 +295,10 @@ const App = {
 
 App.init();
 
+
+function myFunc(){
+    console.log('carregou');
+}
 
 
 // Transaction.add({
