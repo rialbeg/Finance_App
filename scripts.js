@@ -101,7 +101,7 @@ const Transaction = {
         <button onclick="Modal.toggleConfirm()" type="button" class="cancelbtn">Cancelar</button>
         <button onclick="Transaction.remove(${index})"type="button" class="deletebtn">Deletar</button>
         `
-        console.log(deleteBtn);
+        // console.log(deleteBtn);
         Modal.toggleConfirm();
         
     }
