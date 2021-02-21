@@ -4,6 +4,11 @@ const Modal = {
         document.querySelector('.modal-overlay')
         .classList
         .toggle('active');
+    },
+    toggleConfirm(){
+        document.querySelector('.modal-confirm-overlay')
+        .classList
+        .toggle('active');
     }
 }
 
@@ -49,9 +54,11 @@ const Transaction = {
         App.reload();
     },
     remove(index){
-        Transaction.all.splice(index,1);
        
+        Transaction.all.splice(index,1);
+        Modal.toggleConfirm();
         App.reload();
+        
     },
     incomes(){
         let income = 0;
@@ -85,15 +92,27 @@ const Transaction = {
         // return total;
         
         return Transaction.incomes() + Transaction.expenses();
+    },
+    delete(index){
+       
+        const deleteBtn = document.querySelector('.clearfix');
+       
+        deleteBtn.innerHTML = `
+        <button onclick="Modal.toggleConfirm()" type="button" class="cancelbtn">Cancelar</button>
+        <button onclick="Transaction.remove(${index})"type="button" class="deletebtn">Deletar</button>
+        `
+        console.log(deleteBtn);
+        Modal.toggleConfirm();
+        
     }
 }
 
-let count = 0;
+
 
 const DOM = {
     transactionsContainer:document.querySelector('#data-table tbody'),
     addTransaction(transaction,index){
-        // count++;
+        
         const tr = document.createElement('tr');
        
         tr.className = `animate__animated animate__fadeInLeft`;
@@ -113,7 +132,7 @@ const DOM = {
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
-            <img onclick="Transaction.remove(${index})" class="hvr-pulse" src="./assets/minus.svg" alt="Remover transação">
+            <img onclick="Transaction.delete(${index})" class="hvr-pulse" src="./assets/minus.svg" alt="Remover transação">
         </td>
     
         `
